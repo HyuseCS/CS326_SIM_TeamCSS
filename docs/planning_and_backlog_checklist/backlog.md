@@ -139,6 +139,19 @@
 
 ---
 
+### US-11 — Profanity Filter & Message Moderation ✨ NEW — CR-01
+**Priority:** 🟡 Medium | **Story Points:** 3
+ 
+> *As a* **room admin**, *I want to* **have messages automatically filtered for profanity and be able to manually delete flagged messages** *so that* **chat rooms remain safe and respectful for all users.**
+ 
+**Acceptance Criteria:**
+- [ ] All outgoing messages pass through a server-side profanity filter before broadcast; flagged words are replaced with asterisks (e.g., `****`).
+- [ ] Room admins can manually delete any message in their room; it is replaced with *"[message removed by admin]"* for all members in real time via WebSocket.
+- [ ] Deleted messages are soft-deleted in the database (`content` nulled, `deleted_at` timestamp set) and excluded from chat history loads.
+- [ ] Users whose messages are deleted three or more times in a room receive an automated in-app warning notification.
+
+---
+
 ## Backlog Summary
 
 | ID    | Title                             | Priority | Points |
@@ -151,6 +164,7 @@
 | US-06 | View Chat History                 | 🔴 High  | 3      |
 | US-07 | Online Presence Indicators        | 🟡 Med   | 3      |
 | US-08 | Leave or Delete a Room            | 🟡 Med   | 2      |
+| US-11 | Profanity Filter & Moderation     | 🟡 Med   | 3      | Sprint 2 ✨ CR-01          |
 | US-09 | Message Reactions                 | 🟢 Low   | 3      |
 | US-10 | User Profile & Avatar             | 🟢 Low   | 2      |
-| **Total** |                               |          | **26** |
+| **Total** |                               |          | **29** |
