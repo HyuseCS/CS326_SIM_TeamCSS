@@ -1,4 +1,4 @@
-"use client"; //for conflict for feature branch
+"use client"; //for conflict only for dev
 
 import React, { useState, useEffect } from 'react';
 
