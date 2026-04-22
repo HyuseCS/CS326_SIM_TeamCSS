@@ -1,6 +1,6 @@
 # Risk Register
 
-> **Project:** Real-time Chat Rooms  
+> **Project:** Deezcord 
 > **Last Updated:** 2026-04-17  
 > **Scoring:** Score = Likelihood × Impact (max 25)  
 > 🔴 Critical = 15–25 &nbsp;|&nbsp; 🟡 Moderate = 8–14 &nbsp;|&nbsp; 🟢 Low = 1–7

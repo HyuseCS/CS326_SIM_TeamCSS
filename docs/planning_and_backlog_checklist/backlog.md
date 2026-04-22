@@ -1,6 +1,6 @@
 # Product Backlog
 
-> **Project:** Real-time Chat Rooms – A web application for creating and joining topic-based live chat rooms  
+> **Project:** Deezcord – A web application for creating and joining topic-based live chat rooms  
 > **Last Updated:** 2026-04-17
 
 ---

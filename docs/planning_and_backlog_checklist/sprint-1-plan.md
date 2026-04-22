@@ -1,6 +1,6 @@
 # Sprint 1 Plan
 
-> **Project:** Real-time Chat Rooms  
+> **Project:** Deezcord
 > **Sprint Duration:** Week 1 – Week 2 (April 21 – May 2, 2026)  
 > **Sprint Goal:** Deliver a working authentication flow and the core room experience so that a user can register, log in, create a room, and exchange real-time messages end-to-end.  
 > **Team Capacity:** ~13 story points (conservative; accounts for environment setup and WebSocket spike in Week 1)

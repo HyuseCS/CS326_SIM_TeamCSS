@@ -1,6 +1,6 @@
 # Project Schedule
 
-> **Project:** Real-time Chat Rooms  
+> **Project:** Deezcord
 > **Timeline:** 4 Weeks (April 21 – May 15, 2026)  
 > **Methodology:** Agile / Scrum (2-week sprints)  
 > **Target Release:** 🚀 May 15, 2026

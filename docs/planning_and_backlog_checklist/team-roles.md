@@ -1,6 +1,6 @@
 # Team Roles
 
-> **Project:** Real-time Chat Rooms  
+> **Project:** Deezcord 
 > **Team Size:** 5 Members  
 > **Role Rotation:** Roles rotate each sprint so every member gains experience across all functions.
 
