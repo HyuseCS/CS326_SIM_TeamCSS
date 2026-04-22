@@ -1,4 +1,4 @@
-"use client";
+"use client"; //for conflict only
 
 import React, { useState } from 'react';
 import styles from './login.module.css';
