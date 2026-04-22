@@ -50,7 +50,7 @@ For the final sprint and release phase (May 5 – May 15), the team roles are as
 
 ## 6. Live Environment Verification
 - **Deployed System Verification:** The system has been successfully deployed to our production environment. All core WebSocket and REST API functionalities have been verified to work online under simulated load.
-- **Live Link:** *(Placeholder for live system URL)*
+- **Live Link:** *https://deezcord-inky.vercel.app/login*
+
 - **Screenshot of Deployed System:**  
-  *(Placeholder for live system screenshot)*  
   ![Deployed System Screenshot](./assets/deployed-system-screenshot.png)
