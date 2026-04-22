@@ -1,72 +1,108 @@
 # Technical Debt Register
 
-**Project:** TeamCSS – Real-time Chat Application  
-**Version:** v0.8  
-**Team:** Butaya, Kent Vincent | Fabria, Kerby | Legaspi, Christian John | Rejas, Carl Dominic | Pagalan, Theodore  
+**Project:** TeamCSS – Real-time Chat Application
+**Version:** v0.8
+**Team:** Butaya, Kent Vincent | Fabria, Kerby | Legaspi, Christian John | Rejas, Carl Dominic | Pagalan, Theodore
+**Last Updated:** April 2026
 
 ---
 
-## What is Technical Debt?
+## Overview
 
-Technical debt refers to shortcuts, workarounds, or suboptimal implementations made during development that will need to be fixed or improved in the future. Addressing tech debt improves code quality, maintainability, and performance.
-
----
-
-## Technical Debt Items
-
-### TD-01 · Hardcoded Configuration Values
-**Area:** Backend / Config  
-**Description:** Environment-specific values such as server ports, database URLs, and API keys are hardcoded directly in source files instead of being managed through environment variables (`.env`).  
-**Impact:** High – Makes deployment to different environments error-prone and poses a security risk.  
-**Proposed Fix:** Move all config values to a `.env` file and access them via `process.env` variables.  
-**Effort Estimate:** 2 story points  
+Technical debt refers to code-level shortcuts or incomplete implementations that work now but need to be revisited. This register tracks known debt in the TeamCSS project to ensure it is addressed in future sprints.
 
 ---
 
-### TD-02 · No Input Validation on Chat Messages
-**Area:** Frontend / Backend  
-**Description:** Messages submitted through the chat form are not validated or sanitized before being stored or broadcast. This can allow empty messages, excessively long strings, or potentially malicious input.  
-**Impact:** High – Risk of XSS attacks and degraded user experience.  
-**Proposed Fix:** Add client-side length checks and server-side sanitization using a library such as `DOMPurify` or `validator.js`.  
-**Effort Estimate:** 3 story points  
+## Debt Items
+
+### TD-01 — Hardcoded Configuration Values
+
+| Field | Detail |
+|---|---|
+| **Area** | Backend |
+| **Impact** | High |
+| **Story Points** | 2 |
+| **Status** | Open |
+| **Assigned Sprint** | Sprint 3 |
+
+**Problem:** Server port, database URL, and socket origin are hardcoded directly in `server.js` instead of using environment variables. This makes the app unsafe to share publicly and difficult to deploy across environments.
+
+**Fix:** Extract all config values into a `.env` file and reference them using `process.env.VARIABLE_NAME`.
 
 ---
 
-### TD-03 · Duplicate Event Listeners Not Cleaned Up
-**Area:** Frontend / WebSocket  
-**Description:** Socket.io event listeners (e.g., `on('message')`) are attached on component mount but are not removed when a component unmounts or the user navigates away, causing duplicate listener accumulation.  
-**Impact:** Medium – Leads to memory leaks and duplicate message rendering over time.  
-**Proposed Fix:** Implement cleanup logic (e.g., `socket.off('message')`) in component teardown or `useEffect` return functions.  
-**Effort Estimate:** 2 story points  
+### TD-02 — No Input Validation on Chat Messages
+
+| Field | Detail |
+|---|---|
+| **Area** | Frontend / Backend |
+| **Impact** | High |
+| **Story Points** | 3 |
+| **Status** | Open |
+| **Assigned Sprint** | Sprint 3 |
+
+**Problem:** The message input has no validation — users can send empty messages, extremely long strings, or input containing scripts. This risks both poor UX and XSS vulnerabilities.
+
+**Fix:** Add client-side checks (min/max length) and sanitize input server-side using `validator.js` or `DOMPurify` before storing or broadcasting.
 
 ---
 
-### TD-04 · Lack of Error Handling for Failed API Calls
-**Area:** Frontend / API Layer  
-**Description:** Fetch/axios calls to the backend do not have consistent error handling. If a request fails (e.g., server is down), the UI does not show a meaningful error message to the user.  
-**Impact:** Medium – Poor user experience; silent failures make debugging difficult.  
-**Proposed Fix:** Wrap all API calls in `try/catch` blocks and display appropriate error toasts or messages in the UI.  
-**Effort Estimate:** 3 story points  
+### TD-03 — Socket Event Listeners Not Cleaned Up
+
+| Field | Detail |
+|---|---|
+| **Area** | Frontend / WebSocket |
+| **Impact** | Medium |
+| **Story Points** | 2 |
+| **Status** | ✅ Resolved in v0.8 |
+| **Assigned Sprint** | Sprint 2 |
+
+**Problem:** `socket.on('message')` listeners were added on component load but never removed when the user left a room. Over time this caused duplicate messages and JS heap memory to grow continuously.
+
+**Fix:** Added `socket.off('message')` cleanup in the `useEffect` return. Memory leak confirmed resolved — see `performance.md` for before/after data.
 
 ---
 
-### TD-05 · No Pagination for Chat History
-**Area:** Backend / Frontend  
-**Description:** The chat history feature (US-06) loads all messages from the database at once, with no limit or pagination. As the message count grows, this will cause performance degradation.  
-**Impact:** Medium – Slow load times and high memory usage for rooms with many messages.  
-**Proposed Fix:** Implement cursor-based or offset-based pagination (e.g., load last 50 messages, load more on scroll).  
-**Effort Estimate:** 5 story points  
+### TD-04 — Missing Error Handling on API Calls
+
+| Field | Detail |
+|---|---|
+| **Area** | Frontend / API Layer |
+| **Impact** | Medium |
+| **Story Points** | 3 |
+| **Status** | ⚠️ Partially Resolved in v0.8 |
+| **Assigned Sprint** | Sprint 2–3 |
+
+**Problem:** Most fetch calls to the backend had no `try/catch`. If the server was unavailable, the UI would silently break with no feedback to the user.
+
+**Fix:** Wrapped core API calls (`login`, `sendMessage`, `fetchHistory`) in `try/catch` blocks. Error messages now display in the UI. Remaining endpoints to be covered in Sprint 3.
 
 ---
 
-## Summary Table
+### TD-05 — No Pagination for Chat History
 
-| ID    | Description                          | Impact | Effort | Status      |
-|-------|--------------------------------------|--------|--------|-------------|
-| TD-01 | Hardcoded config values              | High   | 2 pts  | Open        |
-| TD-02 | No input validation on messages      | High   | 3 pts  | Open        |
-| TD-03 | Duplicate event listeners            | Medium | 2 pts  | Open        |
-| TD-04 | No error handling for API calls      | Medium | 3 pts  | Open        |
-| TD-05 | No pagination for chat history       | Medium | 5 pts  | Open        |
+| Field | Detail |
+|---|---|
+| **Area** | Backend / Frontend |
+| **Impact** | Medium |
+| **Story Points** | 5 |
+| **Status** | Open |
+| **Assigned Sprint** | Sprint 3 |
 
-**Total Effort to Resolve:** 15 story points
+**Problem:** `GET /api/messages` returns all messages at once regardless of count. As rooms grow, this causes slow load times, high memory use, and poor mobile performance.
+
+**Fix:** Implement limit/offset or cursor-based pagination — load the last 50 messages by default, then fetch older ones as the user scrolls up.
+
+---
+
+## Summary
+
+| ID | Description | Impact | Points | Status |
+|---|---|---|---|---|
+| TD-01 | Hardcoded config values | High | 2 | Open |
+| TD-02 | No input validation | High | 3 | Open |
+| TD-03 | Uncleaned socket listeners | Medium | 2 | ✅ Resolved |
+| TD-04 | Missing API error handling | Medium | 3 | ⚠️ Partial |
+| TD-05 | No chat history pagination | Medium | 5 | Open |
+
+**Total Debt:** 15 story points &nbsp;|&nbsp; **Resolved:** 2 pts &nbsp;|&nbsp; **Remaining:** 13 pts
