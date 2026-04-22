@@ -1,4 +1,4 @@
-"use client";
+"use client"; //for conflict only for dev
 
 import React, { useState, useEffect } from 'react';
 
@@ -53,6 +53,13 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-200 dark:from-slate-900 dark:to-slate-950 relative overflow-hidden font-sans text-slate-900 dark:text-slate-50 transition-colors duration-500">
+      
+      {/* Deezcord Server Status Feature - Top Left */}
+      <div className="absolute top-6 left-6 bg-white/70 dark:bg-slate-800/60 backdrop-blur-md border border-slate-200/50 dark:border-white/10 text-slate-900 dark:text-slate-50 px-4 py-2 rounded-full flex items-center gap-2.5 z-50 shadow-sm transition-colors duration-500">
+        <div className="w-2.5 h-2.5 bg-emerald-500 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
+        <span className="text-sm font-medium">All Systems Operational</span>
+      </div>
+
       {mounted && (
         <button 
           onClick={toggleTheme} 
@@ -158,4 +165,3 @@ export default function LoginPage() {
     </div>
   );
 }
-
