@@ -1,18 +1,18 @@
-"use client"; //for conflict only for dev
+"use client";
 
 import React, { useState, useEffect } from 'react';
 
-export default function LoginPage() {
-  const [identifier, setIdentifier] = useState('');
+export default function RegisterPage() {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    // On mount, read from local storage or system preference
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
@@ -43,11 +43,14 @@ export default function LoginPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
     setIsLoading(true);
-    // Simulate loading for the visual MVP
     setTimeout(() => {
       setIsLoading(false);
-      console.log('Login attempt', { identifier, password, rememberMe });
+      console.log('Registration attempt', { username, email, password });
     }, 1500);
   };
 
@@ -92,58 +95,69 @@ export default function LoginPage() {
 
       <div className="relative z-10 w-full max-w-[420px] bg-white dark:bg-slate-800 border border-slate-200/50 dark:border-white/10 rounded-3xl p-10 md:p-12 shadow-2xl animate-fade-in-up">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-extrabold mb-2 tracking-tight text-slate-900 dark:text-slate-50">Welcome Back</h1>
-          <p className="text-[0.95rem] text-slate-500 dark:text-slate-400 m-0">Enter your details to access your account</p>
+          <h1 className="text-3xl font-extrabold mb-2 tracking-tight text-slate-900 dark:text-slate-50">Create Account</h1>
+          <p className="text-[0.95rem] text-slate-500 dark:text-slate-400 m-0">Join the Deezcord community today</p>
         </div>
 
         <form onSubmit={handleSubmit}>
-          <div className="mb-6">
-            <label className="block text-sm font-semibold mb-2 text-slate-900 dark:text-slate-50" htmlFor="identifier">
-              Username or Email
+          <div className="mb-4">
+            <label className="block text-sm font-semibold mb-2 text-slate-900 dark:text-slate-50" htmlFor="username">
+              Username
             </label>
-            <div className="relative">
-              <input
-                id="identifier"
-                type="text"
-                className="w-full px-4 py-3.5 bg-white/90 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 rounded-xl text-base text-slate-900 dark:text-slate-50 transition-all duration-200 outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 focus:-translate-y-[1px] placeholder:text-slate-500/70 dark:placeholder:text-slate-400/70"
-                placeholder="user@example.com"
-                value={identifier}
-                onChange={(e) => setIdentifier(e.target.value)}
-                required
-              />
-            </div>
+            <input
+              id="username"
+              type="text"
+              className="w-full px-4 py-3 bg-white/90 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 rounded-xl text-base text-slate-900 dark:text-slate-50 transition-all duration-200 outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 placeholder:text-slate-500/70 dark:placeholder:text-slate-400/70"
+              placeholder="johndoe"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
           </div>
 
-          <div className="mb-6">
+          <div className="mb-4">
+            <label className="block text-sm font-semibold mb-2 text-slate-900 dark:text-slate-50" htmlFor="email">
+              Email Address
+            </label>
+            <input
+              id="email"
+              type="email"
+              className="w-full px-4 py-3 bg-white/90 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 rounded-xl text-base text-slate-900 dark:text-slate-50 transition-all duration-200 outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 placeholder:text-slate-500/70 dark:placeholder:text-slate-400/70"
+              placeholder="john@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="mb-4">
             <label className="block text-sm font-semibold mb-2 text-slate-900 dark:text-slate-50" htmlFor="password">
               Password
             </label>
-            <div className="relative">
-              <input
-                id="password"
-                type="password"
-                className="w-full px-4 py-3.5 bg-white/90 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 rounded-xl text-base text-slate-900 dark:text-slate-50 transition-all duration-200 outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 focus:-translate-y-[1px] placeholder:text-slate-500/70 dark:placeholder:text-slate-400/70"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
+            <input
+              id="password"
+              type="password"
+              className="w-full px-4 py-3 bg-white/90 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 rounded-xl text-base text-slate-900 dark:text-slate-50 transition-all duration-200 outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 placeholder:text-slate-500/70 dark:placeholder:text-slate-400/70"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
           </div>
 
-          <div className="flex justify-between items-center mb-8">
-            <label className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 cursor-pointer">
-              <input
-                type="checkbox"
-                className="accent-blue-500 w-[18px] h-[18px] cursor-pointer"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-              />
-              Remember me
+          <div className="mb-8">
+            <label className="block text-sm font-semibold mb-2 text-slate-900 dark:text-slate-50" htmlFor="confirmPassword">
+              Confirm Password
             </label>
-            <a href="#" className="text-sm text-blue-500 dark:text-blue-400 font-semibold transition-colors duration-200 hover:text-blue-700 dark:hover:text-blue-300 hover:underline">
-              Forgot password?
-            </a>
+            <input
+              id="confirmPassword"
+              type="password"
+              className="w-full px-4 py-3 bg-white/90 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 rounded-xl text-base text-slate-900 dark:text-slate-50 transition-all duration-200 outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 placeholder:text-slate-500/70 dark:placeholder:text-slate-400/70"
+              placeholder="••••••••"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
           </div>
 
           <button 
@@ -151,14 +165,14 @@ export default function LoginPage() {
             className="w-full p-4 bg-blue-500 hover:bg-blue-600 dark:hover:bg-blue-400 text-white border-none rounded-xl text-base font-semibold cursor-pointer transition-all duration-200 relative overflow-hidden hover:-translate-y-[2px] hover:shadow-[0_10px_20px_-10px_rgba(59,130,246,1)] active:translate-y-0 disabled:opacity-70 disabled:cursor-not-allowed"
             disabled={isLoading}
           >
-            {isLoading ? 'Signing in...' : 'Sign In'}
+            {isLoading ? 'Creating account...' : 'Create Account'}
           </button>
         </form>
 
         <div className="mt-8 text-center text-sm text-slate-500 dark:text-slate-400">
-          Don't have an account? 
-          <a href="https://youtu.be/fC7oUOUEEi4" className="text-blue-500 dark:text-blue-400 font-semibold ml-1 transition-colors duration-200 hover:text-blue-700 dark:hover:text-blue-300 hover:underline">
-            Sign up for free
+          Already have an account? 
+          <a href="/login" className="text-blue-500 dark:text-blue-400 font-semibold ml-1 transition-colors duration-200 hover:text-blue-700 dark:hover:text-blue-300 hover:underline">
+            Sign In
           </a>
         </div>
       </div>

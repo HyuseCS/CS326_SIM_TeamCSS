@@ -31,3 +31,32 @@ This plan covers the implementation of the login page for the Deezcord web app. 
 - [x] Verify the layout and visuals by running the dev server
 - [x] Ensure light/dark mode toggling behaves correctly based on system preferences
 
+---
+
+# Deezcord Registration Page Implementation (Frontend Only)
+
+This task covers the implementation of the registration page for the Deezcord web app, focusing on the visual and frontend UI.
+
+## Proposed Implementation
+
+### 1. `src/app/register/page.tsx`
+- Client component (`"use client"`) to render the registration form.
+- Includes fields for:
+  - Username
+  - Email
+  - Password
+  - Confirm Password
+- Features:
+  - Consistency with the login page's premium aesthetic and glassmorphism.
+  - Light/dark mode integration.
+  - Form validation for matching passwords.
+  - Link to the login page.
+
+---
+
+## Task Checklist
+
+- [x] Create `deezcord/src/app/register/page.tsx` with the registration form component
+- [ ] Verify the layout and visuals by running the dev server
+- [ ] Ensure light/dark mode toggling behaves correctly and stays consistent with the login page
+
