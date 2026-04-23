@@ -1,7 +1,7 @@
 Bug ID: BUG-001
 Title: Register button redirects to external YouTube link
 Severity: High
-Status: Open
+Status: Closed
 
 Description:
 When a user clicks the "Register" button on the main landing/login page, the application fails to route them to the registration form. Instead, the href or onClick event is improperly linked to an external YouTube URL.

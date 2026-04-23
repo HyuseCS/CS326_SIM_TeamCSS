@@ -157,7 +157,7 @@ export default function LoginPage() {
 
         <div className="mt-8 text-center text-sm text-slate-500 dark:text-slate-400">
           Don't have an account? 
-          <a href="https://youtu.be/fC7oUOUEEi4" className="text-blue-500 dark:text-blue-400 font-semibold ml-1 transition-colors duration-200 hover:text-blue-700 dark:hover:text-blue-300 hover:underline">
+          <a href="/register" className="text-blue-500 dark:text-blue-400 font-semibold ml-1 transition-colors duration-200 hover:text-blue-700 dark:hover:text-blue-300 hover:underline">
             Sign up for free
           </a>
         </div>
