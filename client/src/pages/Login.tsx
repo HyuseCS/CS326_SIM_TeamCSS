@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export default function LoginPage() {
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const [mounted, setMounted] = useState(false);
+
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setMounted(true);
@@ -42,11 +47,27 @@ export default function LoginPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+
+    if (identifier.trim().length < 3) {
+      setError('Please enter a valid username or email.');
+      return;
+    }
+
+    if (password.length < 1) {
+      setError('Password is required.');
+      return;
+    }
+
     setIsLoading(true);
     // Simulate loading for the visual MVP
     setTimeout(() => {
       setIsLoading(false);
       console.log('Login attempt', { identifier, password, rememberMe });
+
+      // Simulate successful login
+      login({ username: identifier, email: `${identifier}@example.com` });
+      navigate('/');
     }, 1500);
   };
 
@@ -94,6 +115,12 @@ export default function LoginPage() {
           <h1 className="text-3xl font-extrabold mb-2 tracking-tight text-slate-900 dark:text-slate-50">Welcome Back</h1>
           <p className="text-[0.95rem] text-slate-500 dark:text-slate-400 m-0">Enter your details to access your account</p>
         </div>
+
+        {error && (
+          <div className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-xl text-red-600 dark:text-red-400 text-sm font-medium">
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit}>
           <div className="mb-6">

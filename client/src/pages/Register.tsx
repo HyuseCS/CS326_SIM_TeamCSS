@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export default function RegisterPage() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const [mounted, setMounted] = useState(false);
+
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setMounted(true);
@@ -40,16 +45,47 @@ export default function RegisterPage() {
     }
   };
 
+  const validateEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  const validatePassword = (pass: string) => {
+    // Min 8 chars, at least one letter and one number
+    return pass.length >= 8 && /[A-Za-z]/.test(pass) && /[0-9]/.test(pass);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      alert("Passwords do not match!");
+    setError('');
+
+    if (username.length < 3) {
+      setError("Username must be at least 3 characters long.");
       return;
     }
+
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    if (!validatePassword(password)) {
+      setError("Password must be at least 8 characters long and contain both letters and numbers.");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match!");
+      return;
+    }
+
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
       console.log('Registration attempt', { username, email, password });
+      
+      // Simulate successful registration and login
+      login({ username, email });
+      navigate('/');
     }, 1500);
   };
 
@@ -97,6 +133,12 @@ export default function RegisterPage() {
           <h1 className="text-3xl font-extrabold mb-2 tracking-tight text-slate-900 dark:text-slate-50">Create Account</h1>
           <p className="text-[0.95rem] text-slate-500 dark:text-slate-400 m-0">Join the Deezcord community today</p>
         </div>
+
+        {error && (
+          <div className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-xl text-red-600 dark:text-red-400 text-sm font-medium">
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
