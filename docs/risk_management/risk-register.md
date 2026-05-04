@@ -21,6 +21,8 @@
 | R-08 | **Database grows unbounded with chat history** — High message volume could cause storage costs and query slowdowns. | 2 | 4 | **8** | 🟡 Moderate | Implement paginated history (50 per page) from Day 1. Index `(room_id, created_at)`. Set a soft cap of 10,000 messages per room. | Dominic Rejas |
 | R-09 | **Browser compatibility issues with WebSockets** — Older browsers or restrictive firewalls may block socket connections. | 2 | 3 | **6** | 🟢 Low | Configure Socket.IO to fall back to HTTP long-polling. Test on Chrome, Firefox, Safari, and Edge before release. | Kent Butaya |
 | R-10 | **Third-party email service outage** — Registration relies on an external mail provider; an outage blocks new user onboarding. | 2 | 3 | **6** | 🟢 Low | Add a secondary provider as fallback (e.g., AWS SES). Implement a "Resend Verification" button. Log all email failures with an alert. | Kerby Fabria |
+| R-11 | **Plaintext password exposure** — If the database is compromised, plaintext passwords (currently in memory/local storage) could be leaked. | 2 | 5 | **10** | 🟡 Moderate | Implement bcrypt hashing on the server. Never log or store plaintext passwords. Ensure JWTs are used for session management. | Theodore Pagalan |
+| R-12 | **Cross-Site Scripting (XSS) via chat** — Malicious users could inject scripts into chat messages if content is not properly sanitized. | 3 | 4 | **12** | 🟡 Moderate | Implement server-side and client-side sanitization of all user-generated content using libraries like DOMPurify. | Kent Butaya |
 
 ---
 
@@ -29,7 +31,7 @@
 | Severity     | Count | Risk IDs                               |
 |--------------|:-----:|----------------------------------------|
 | 🔴 Critical  | 2     | R-01, R-02                             |
-| 🟡 Moderate  | 7     | R-03, R-04, R-05, R-06, R-07, R-08 |
+| 🟡 Moderate  | 9     | R-03, R-04, R-05, R-06, R-07, R-08, R-11, R-12 |
 | 🟢 Low       | 2     | R-09, R-10                             |
 
 ---
